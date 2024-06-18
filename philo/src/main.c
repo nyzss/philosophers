@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 08:16:58 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 14:17:09 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 
 void	*task(void *arg)
 {
-	(void)arg;
-	printf("arg from inside thread number: %d\n", *((int *)arg));
-	// printf("hello world!!\n");
+	t_philo	*ctx;
+
+	ctx = (t_philo *)arg;
+	pthread_mutex_lock(&(ctx->lock));
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	printf("time: %ld\n", tv.tv_usec);
+	usleep(10000);
+	printf("hello world!!\n");
+	pthread_mutex_unlock(&(ctx->lock));
 	return (NULL);
 }
 
@@ -25,12 +32,18 @@ void	pl_create_threads(int max)
 	int			i;
 	pthread_t	*f_thread;
 	int			p_r;
+	t_philo		ctx;
 
 	i = 0;
+	if (pthread_mutex_init(&(ctx.lock), NULL) != 0)
+	{
+		printf("error when creating mutexes\n");
+		return ;
+	}
 	f_thread = malloc(sizeof(pthread_t) * max);
 	while (i < max)
 	{
-		if (pthread_create(f_thread + i, NULL, task, &i))
+		if (pthread_create(f_thread + i, NULL, task, &ctx))
 		{
 			printf("error occured when creating threads, exiting..\n");
 			free(f_thread);

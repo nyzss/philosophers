@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 07:30:10 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 14:12:29 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+typedef struct s_philo
+{
+	pthread_mutex_t lock;
+}	t_philo;
 
 int		ft_atoi(const char *str);
 
