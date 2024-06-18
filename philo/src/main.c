@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 21:39:46 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 21:55:05 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,41 @@
 
 void	*pl_eating(void *arg)
 {
-	t_ctx			*ctx;
+	t_philo	*philo;
 
-	ctx = (t_ctx *)arg;
-	if (ctx->nb_philo % 2 == 0)
+	philo = (t_philo *)arg;
+	if (philo->nb_philo % 2 == 0)
 	{
-		pthread_mutex_lock(&(ctx->));
-		usleep(1000 * 100);
-		pthread_mutex_unlock(&(ctx->lock_f));
-		printf("%lld doing something\n", pl_get_time() - ctx->start_time);
+		pthread_mutex_lock(philo->left_fork);
+		printf("%lld %d took left fork\n", pl_get_time() - philo->start_time, philo->id);
+		pthread_mutex_lock(philo->right_fork);
+		printf("%lld %d took right fork\n", pl_get_time() - philo->start_time, philo->id);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		printf("%lld %d took right fork\n", pl_get_time() - philo->start_time, philo->id);
+		pthread_mutex_lock(philo->left_fork);
+		printf("%lld %d took left fork\n", pl_get_time() - philo->start_time, philo->id);
+	}
+	// pthread_mutex_unlock(&(ctx->lock_f));
+	philo->last_eaten = pl_get_time();
+	philo->meal_count += 1;
+	usleep(1000 * 500);
+	printf("%lld %d is eating\n", pl_get_time() - philo->start_time, philo->id);
+	if (philo->nb_philo % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		printf("%lld %d drooped left fork\n", pl_get_time() - philo->start_time, philo->id);
+		pthread_mutex_lock(philo->right_fork);
+		printf("%lld %d dropped right fork\n", pl_get_time() - philo->start_time, philo->id);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		printf("%lld %d dropped right fork\n", pl_get_time() - philo->start_time, philo->id);
+		pthread_mutex_unlock(philo->left_fork);
+		printf("%lld %d dropped left fork\n", pl_get_time() - philo->start_time, philo->id);
 	}
 	return (NULL);
 }
@@ -49,9 +75,12 @@ int	pl_create_philos(t_ctx *ctx)
 	while (i < ctx->nb_philo)
 	{
 		ctx->philosophers[i].id = i;
-		ctx->philosophers[i].left_fork = ctx->forks[i];
-		ctx->philosophers[i].right_fork = ctx->forks[(i + 1) % ctx->nb_philo];
-		ctx->philosophers[i].last_eaten = pl_get_time();
+		ctx->philosophers[i].left_fork = &(ctx->forks[i]);
+		ctx->philosophers[i].right_fork = &(ctx->forks[(i + 1) % ctx->nb_philo]);
+		ctx->philosophers[i].last_eaten = 0;
+		ctx->philosophers[i].start_time = ctx->start_time;
+		ctx->philosophers[i].nb_philo = ctx->nb_philo;
+		ctx->philosophers[i].meal_count = 0;
 		if (pthread_create(&(ctx->philosophers[i].thread_id), NULL, pl_eating, ctx) != 0)
 			return (1);
 		i++;

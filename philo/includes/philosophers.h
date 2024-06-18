@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 21:30:48 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 21:52:28 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ typedef struct s_philo
 	int				dead;
 	int				is_eating;
 	int				is_sleeping;
+	int				nb_philo;
+	int				meal_count;
 	long long		last_eaten;
+	long long		start_time;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	pthread_t		thread_id;
@@ -41,7 +44,7 @@ typedef struct s_ctx
 	int				max_eat;
 	t_philo			philosophers[200];
 	pthread_mutex_t	*forks[200];
-	long	long	start_time;
+	long long		start_time;
 	int				meal_count;
 }	t_ctx;
 
