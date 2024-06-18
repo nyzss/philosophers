@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 20:12:38 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 21:30:48 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@
 
 typedef struct s_philo
 {
-	int			id;
-	int			dead;
-	int			is_eating;
-	int			is_sleeping;
-	pthread_t	thread_id;
+	int				id;
+	int				dead;
+	int				is_eating;
+	int				is_sleeping;
+	long long		last_eaten;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
+	pthread_t		thread_id;
 }	t_philo;
 
 typedef struct s_ctx
@@ -37,7 +40,7 @@ typedef struct s_ctx
 	int				time_to_sleep;
 	int				max_eat;
 	t_philo			philosophers[200];
-	pthread_mutex_t	lock_f;
+	pthread_mutex_t	*forks[200];
 	long	long	start_time;
 	int				meal_count;
 }	t_ctx;
@@ -45,5 +48,7 @@ typedef struct s_ctx
 int			ft_atoi(const char *str);
 
 long long	pl_get_time(void);
+
+int			pl_parse_args(int ac, char **av);
 
 #endif
