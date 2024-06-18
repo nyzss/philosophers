@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 14:32:46 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 19:59:51 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long long	pl_get_time(void)
 {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
-	return ((long long)(tv.tv_sec) * 1000 + (tv.tv_usec) / 1000);
+	return ((tv.tv_sec) * (long long)1000 + (tv.tv_usec) / 1000);
 }
 
 // void	*task(void *arg)
@@ -40,33 +40,28 @@ long long	pl_get_time(void)
 
 void	*task(void *arg)
 {
-	t_philo			*ctx;
+	t_ctx			*ctx;
 
-	ctx = (t_philo *)arg;
-	pthread_mutex_lock(&(ctx->lock));
-	usleep(1000 * 1000);
-	printf("hello world!!\n");
-	pthread_mutex_unlock(&(ctx->lock));
-	printf("current_time: %lld\n", ctx->time);
+	ctx = (t_ctx *)arg;
+	pthread_mutex_lock(&(ctx->lock_f));
+	usleep(1000 * 100);
+	// printf("hello world!!\n");
+	pthread_mutex_unlock(&(ctx->lock_f));
+	printf("current_time: %lld\n", pl_get_time() - ctx->start_time);
 	return (NULL);
 }
 
-void	pl_create_threads(t_philo *ctx, int max)
+void	pl_create_threads(t_ctx *ctx, int max)
 {
 	int			i;
 	pthread_t	*f_thread;
 	int			p_r;
 
 	i = 0;
-	if (pthread_mutex_init(&(ctx->lock), NULL) != 0)
-	{
-		printf("error when creating mutexes\n");
-		return ;
-	}
 	f_thread = malloc(sizeof(pthread_t) * max);
 	while (i < max)
 	{
-		if (pthread_create(f_thread + i, NULL, task, &ctx))
+		if (pthread_create(f_thread + i, NULL, task, ctx))
 		{
 			printf("error occured when creating threads, exiting..\n");
 			free(f_thread);
@@ -89,32 +84,34 @@ void	pl_create_threads(t_philo *ctx, int max)
 	free(f_thread);
 	return ;
 }
-void	*pl_update_time(void *arg)
-{
-	t_philo		*ctx;
-	long long	now;
+// void	*pl_update_time(void *arg)
+// {
+// 	t_philo		*ctx;
 
-	now = pl_get_time();
-	ctx = (t_philo *)arg;
-	ctx->time = now - ctx->start;
-	return (NULL);
-}
+// 	ctx = (t_philo *)arg;
+// 	ctx->time = pl_get_time() - ctx->start;
+// 	printf("is this getting called anyway? %lld", pl_get_time());
+// 	return (NULL);
+// }
 
 int main(int ac, char **av)
 {
 	int			max;
-	t_philo		ctx;
-	pthread_t	time_thread;
+	t_ctx		ctx;
 
-	ctx.start = pl_get_time();
+	ctx.start_time = pl_get_time();
 	if (ac != 2)
 	{
 		printf("womp womp\n");
 		return (1);
 	}
-	pthread_create(&time_thread, NULL, &pl_update_time, &ctx);
+	if (pthread_mutex_init(&(ctx.lock_f), NULL) != 0)
+	{
+		printf("error when creating mutexes\n");
+		return (0);
+	}
 	max = ft_atoi(av[1]);
 	pl_create_threads(&ctx, max);
-	pthread_join(time_thread, NULL);
+	pthread_mutex_destroy(&(ctx.lock_f));
 	printf("hello world!\n");
 }
