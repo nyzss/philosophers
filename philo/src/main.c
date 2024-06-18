@@ -6,18 +6,11 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 20:11:50 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 20:32:37 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-long long	pl_get_time(void)
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec) * (long long)1000 + (tv.tv_usec) / 1000);
-}
 
 void	*task(void *arg)
 {
@@ -27,42 +20,37 @@ void	*task(void *arg)
 	pthread_mutex_lock(&(ctx->lock_f));
 	usleep(1000 * 100);
 	pthread_mutex_unlock(&(ctx->lock_f));
-	printf("current_time: %lld\n", pl_get_time() - ctx->start_time);
+	printf("%lld doing something\n", pl_get_time() - ctx->start_time);
 	return (NULL);
 }
 
-void	pl_create_threads(t_ctx *ctx, int max)
+int	pl_join_philos(t_ctx *ctx)
 {
-	int			i;
-	pthread_t	*f_thread;
-	int			p_r;
+	int	i;
 
 	i = 0;
-	f_thread = malloc(sizeof(pthread_t) * max);
-	while (i < max)
+	while (i < ctx->nb_philo)
 	{
-		if (pthread_create(f_thread + i, NULL, task, ctx))
-		{
-			printf("error occured when creating threads, exiting..\n");
-			free(f_thread);
-			return ;
-		}
+		if (pthread_join(ctx->philosophers[i].thread_id, NULL) != 0)
+			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	pl_create_philos(t_ctx *ctx)
+{
+	int	i;
+
 	i = 0;
-	while (i < max)
+	while (i < ctx->nb_philo)
 	{
-		p_r = pthread_join(f_thread[i], NULL);
-		if (p_r != 0)
-		{
-			printf("error occured when creating threads, exiting..\n");
-			free(f_thread);
-			return ;
-		}
+		ctx->philosophers[i].id = i;
+		if (pthread_create(&(ctx->philosophers[i].thread_id), NULL, task, ctx) != 0)
+			return (1);
 		i++;
 	}
-	free(f_thread);
-	return ;
+	return (pl_join_philos(ctx));
 }
 
 int	pl_parse_args(int ac, char **av)
@@ -84,25 +72,38 @@ int	pl_parse_args(int ac, char **av)
 		}
 		i++;
 	}
+	return (0);
+}
+
+t_ctx	pl_init(int ac, char **av)
+{
+	t_ctx	ctx;
+
+	if (ac == 6)
+		ctx.max_eat = ft_atoi(av[5]);
+	ctx.nb_philo = ft_atoi(av[1]);
+	ctx.time_to_die = ft_atoi(av[2]);
+	ctx.time_to_eat = ft_atoi(av[3]);
+	ctx.time_to_sleep = ft_atoi(av[4]);
+	ctx.start_time = pl_get_time();
+	return (ctx);
 }
 
 // nb_philo, time_to_die, time_to_eat, time_to_sleep, [max eat]
 // 5 800 200 200 7
 int main(int ac, char **av)
 {
-	int			max;
 	t_ctx		ctx;
 
 	if (pl_parse_args(ac, av) == 1)
 		return (1);
-	ctx.start_time = pl_get_time();
+	ctx = pl_init(ac, av);
 	if (pthread_mutex_init(&(ctx.lock_f), NULL) != 0)
 	{
 		printf("error when creating mutexes\n");
 		return (0);
 	}
-	max = ft_atoi(av[1]);
-	pl_create_threads(&ctx, max);
+	pl_create_philos(&ctx);
 	pthread_mutex_destroy(&(ctx.lock_f));
 	printf("hello world!\n");
 }

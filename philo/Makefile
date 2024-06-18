@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/18 08:09:26 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/18 20:13:00 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ INCLUDES_DIR = includes
 CFLAGS = -Wall -Werror -Wextra -I${INCLUDES_DIR} -g
 
 SRC_FILES = main.c \
-			helper.c
+			helper.c \
+			utils.c
 
 NAME = philo
 

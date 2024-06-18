@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 20:07:29 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 20:12:38 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_ctx
 	int				meal_count;
 }	t_ctx;
 
-int		ft_atoi(const char *str);
+int			ft_atoi(const char *str);
+
+long long	pl_get_time(void);
 
 #endif
