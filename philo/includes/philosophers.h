@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 21:52:28 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 22:00:26 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_ctx
 	int				time_to_sleep;
 	int				max_eat;
 	t_philo			philosophers[200];
-	pthread_mutex_t	*forks[200];
+	pthread_mutex_t	forks[200];
 	long long		start_time;
 	int				meal_count;
 }	t_ctx;

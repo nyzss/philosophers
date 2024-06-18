@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 21:55:05 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 22:05:53 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*pl_eating(void *arg)
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		printf("%lld %d drooped left fork\n", pl_get_time() - philo->start_time, philo->id);
-		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_unlock(philo->right_fork);
 		printf("%lld %d dropped right fork\n", pl_get_time() - philo->start_time, philo->id);
 	}
 	else
@@ -81,11 +81,25 @@ int	pl_create_philos(t_ctx *ctx)
 		ctx->philosophers[i].start_time = ctx->start_time;
 		ctx->philosophers[i].nb_philo = ctx->nb_philo;
 		ctx->philosophers[i].meal_count = 0;
-		if (pthread_create(&(ctx->philosophers[i].thread_id), NULL, pl_eating, ctx) != 0)
+		if (pthread_create(&(ctx->philosophers[i].thread_id), NULL, pl_eating, &(ctx->philosophers[i])) != 0)
 			return (1);
 		i++;
 	}
 	return (pl_join_philos(ctx));
+}
+int		pl_destroy_forks(t_ctx *ctx)
+{
+	int	i;
+
+	i = 0;
+	while (i < ctx->nb_philo)
+	{
+		if (pthread_mutex_destroy(&(ctx->forks[i])) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
+
 }
 
 int		pl_init_forks(t_ctx *ctx)
@@ -105,9 +119,7 @@ int		pl_init_forks(t_ctx *ctx)
 t_ctx	pl_init(int ac, char **av)
 {
 	t_ctx	ctx;
-	int		i;
 
-	i = 0;
 	if (ac == 6)
 		ctx.max_eat = ft_atoi(av[5]);
 	ctx.nb_philo = ft_atoi(av[1]);
@@ -127,12 +139,8 @@ int main(int ac, char **av)
 	if (pl_parse_args(ac, av) == 1)
 		return (1);
 	ctx = pl_init(ac, av);
-	// if (pthread_mutex_init(&(ctx.lock_f), NULL) != 0)
-	// {
-	// 	printf("error when creating mutexes\n");
-	// 	return (0);
-	// }
+	pl_init_forks(&ctx);
 	pl_create_philos(&ctx);
-	// pthread_mutex_destroy(&(ctx.lock_f));
+	pl_destroy_forks(&ctx);
 	printf("hello world!\n");
 }
