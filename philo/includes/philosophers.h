@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 19:59:11 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 20:07:29 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
 
@@ -30,6 +31,11 @@ typedef struct s_philo
 
 typedef struct s_ctx
 {
+	int				nb_philo;
+	int				time_to_eat;
+	int				time_to_die;
+	int				time_to_sleep;
+	int				max_eat;
 	t_philo			philosophers[200];
 	pthread_mutex_t	lock_f;
 	long	long	start_time;
