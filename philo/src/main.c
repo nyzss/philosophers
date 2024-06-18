@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 22:05:53 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 22:07:30 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	*pl_eating(void *arg)
 	// pthread_mutex_unlock(&(ctx->lock_f));
 	philo->last_eaten = pl_get_time();
 	philo->meal_count += 1;
-	usleep(1000 * 500);
+	usleep(1000 * 100);
 	printf("%lld %d is eating\n", pl_get_time() - philo->start_time, philo->id);
 	if (philo->nb_philo % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->left_fork);
-		printf("%lld %d drooped left fork\n", pl_get_time() - philo->start_time, philo->id);
+		printf("%lld %d dropped left fork\n", pl_get_time() - philo->start_time, philo->id);
 		pthread_mutex_unlock(philo->right_fork);
 		printf("%lld %d dropped right fork\n", pl_get_time() - philo->start_time, philo->id);
 	}
