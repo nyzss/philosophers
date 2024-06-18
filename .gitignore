@@ -15,6 +15,6 @@
 .vscode
 tester
 *.txt
-philo
+philo/philo
 src/main.o
 vgcore*
