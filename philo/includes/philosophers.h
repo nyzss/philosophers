@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/18 14:12:29 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/18 14:28:59 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 typedef struct s_philo
 {
 	pthread_mutex_t lock;
+	long long		time;
+	long long		start;
 }	t_philo;
 
 int		ft_atoi(const char *str);
