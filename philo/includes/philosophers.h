@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 08:59:54 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 09:02:42 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_philo
 	int				dead;
 	int				is_eating;
 	int				is_sleeping;
-	int				nb_philo;
 	int				meal_count;
 	long long		last_eaten;
 	pthread_mutex_t	*right_fork;
