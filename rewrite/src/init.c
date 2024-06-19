@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:37:43 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 16:38:14 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 16:43:28 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pl_init_data(t_data *data, int ac, char **av)
 
 	new.nb_philo = ft_atoi(av[1]);
 	new.time_to_die = ft_atoi(av[2]);
-	new.time_to_die = ft_atoi(av[3]);
+	new.time_to_eat = ft_atoi(av[3]);
 	new.time_to_sleep = ft_atoi(av[4]);
 	new.start_time = pl_get_time();
 	new.should_end = 0;
