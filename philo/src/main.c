@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 09:05:31 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 09:36:17 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*pl_eating(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->data->nb_philo % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		printf("%lld %d took left fork\n", pl_get_time() - philo->data->start_time, philo->id);
@@ -31,12 +31,11 @@ void	*pl_eating(void *arg)
 		pthread_mutex_lock(philo->left_fork);
 		printf("%lld %d took left fork\n", pl_get_time() - philo->data->start_time, philo->id);
 	}
-	// pthread_mutex_unlock(&(ctx->lock_f));
 	philo->last_eaten = pl_get_time();
 	philo->meal_count += 1;
 	usleep(1000 * 100);
 	printf("%lld %d is eating\n", pl_get_time() - philo->data->start_time, philo->id);
-	if (philo->data->nb_philo % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		printf("%lld %d dropped left fork\n", pl_get_time() - philo->data->start_time, philo->id);
@@ -74,12 +73,12 @@ int	pl_create_philos(t_data *data, t_philo *philos)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		philos[i].id = i;
-		philos[i].left_fork = &(data->forks[i]);
-		philos[i].right_fork = &(data->forks[(i + 1) % data->nb_philo]);
+		philos[i].id = i + 1;
+		philos[i].data = data;
+		philos[i].left_fork = &(philos->data->forks[i]);
+		philos[i].right_fork = &(philos->data->forks[(i + 1) % data->nb_philo]);
 		philos[i].last_eaten = 0;
 		philos[i].meal_count = 0;
-		philos[i].data = data;
 		if (pthread_create(&(philos[i].thread_id), NULL, pl_eating, &(philos[i])) != 0)
 			return (1);
 		i++;
@@ -118,7 +117,6 @@ int		pl_init_forks(t_data *data)
 t_data	pl_init_data(int ac, char **av)
 {
 	t_data	data;
-	mutex	forks[200];
 
 	if (ac == 6)
 		data.maximum_meal = ft_atoi(av[5]);
@@ -127,7 +125,6 @@ t_data	pl_init_data(int ac, char **av)
 	data.time_to_eat = ft_atoi(av[3]);
 	data.time_to_sleep = ft_atoi(av[4]);
 	data.start_time = pl_get_time();
-	data.forks = forks;
 	pl_init_forks(&data);
 	return (data);
 }
