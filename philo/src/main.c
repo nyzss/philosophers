@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 15:00:56 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 15:05:15 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ int	pl_check_died(t_philo *philos, t_data *data, int *finished)
 		if (philos[i].meal_remaining >= 0 && philos[i].meal_remaining == 0)
 			count += 1;
 		if (pl_get_time() - philos[i].last_eaten > data->time_to_die)
+		{
+			pthread_mutex_unlock(&(philos->data->log_mutex));
+			pl_log_action(&(philos[i]), DIED);
 			return (TRUE);
+		}
 		i++;
 	}
 	*finished = count;
@@ -68,12 +72,11 @@ t_action	pl_check_philos(t_philo *philos, t_data *data)
 	{
 		pthread_mutex_lock(&(philos->data->log_mutex));
 		if (pl_check_died(philos, data, &finished) == TRUE)
-		{
-			return (DIED);
-		}
+			break ;
 		else if (finished == data->nb_philo)
 		{
 			data->should_end = 1;
+			printf("All philosophers have eaten!\n");
 			return (SATISFIED);
 		}
 		pthread_mutex_unlock(&(philos->data->log_mutex));
