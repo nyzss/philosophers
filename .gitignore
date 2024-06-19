@@ -16,5 +16,6 @@
 tester
 *.txt
 philo/philo
+rewrite/philo
 src/main.o
 vgcore*
