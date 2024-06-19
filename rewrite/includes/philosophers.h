@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 15:41:37 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 16:24:27 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				dead;
-	int				is_eating;
-	int				is_sleeping;
 	int				meal_remaining;
 	long long		last_eaten;
 	mutex			*right_fork;
@@ -81,8 +79,14 @@ void		*pl_action(void *arg);
 
 int			pl_init_data(t_data *data, int ac, char **av);
 
-int			pl_init_forks(t_data *data);
+int			pl_init_mutexes(t_data *data);
 
-int			pl_destroy_forks(t_data *data);
+int			pl_destroy_mutexes(t_data *data);
+
+int			pl_start_philos(t_data *data);
+
+int			pl_init_philos(t_data *data, t_philo *philos);
+
+int			pl_join_philos(t_data *data, t_philo *philos);
 
 #endif
