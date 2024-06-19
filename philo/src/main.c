@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 15:05:15 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 15:21:47 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	pl_check_died(t_philo *philos, t_data *data, int *finished)
 			count += 1;
 		if (pl_get_time() - philos[i].last_eaten > data->time_to_die)
 		{
+			data->should_end = 1;
 			pthread_mutex_unlock(&(philos->data->log_mutex));
 			pl_log_action(&(philos[i]), DIED);
 			return (TRUE);
@@ -76,6 +77,7 @@ t_action	pl_check_philos(t_philo *philos, t_data *data)
 		else if (finished == data->nb_philo)
 		{
 			data->should_end = 1;
+			pthread_mutex_unlock(&(philos->data->log_mutex));
 			printf("All philosophers have eaten!\n");
 			return (SATISFIED);
 		}
@@ -152,8 +154,6 @@ int	pl_init_data(t_data *data, int ac, char **av)
 		return (1);
 	if (pthread_mutex_init(&(new.log_mutex), NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&(new.dead_mutex), NULL) != 0)
-		return (1);
 	*data = new;
 	return (0);
 }
@@ -172,6 +172,4 @@ int main(int ac, char **av)
 	pl_create_philos(&data, philo);
 	pl_destroy_forks(&data);
 	pthread_mutex_destroy(&(data.log_mutex));
-	pthread_mutex_destroy(&(data.dead_mutex));
-	printf("hello world!\n");
 }
