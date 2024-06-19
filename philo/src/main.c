@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 10:55:55 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 12:02:17 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	pl_create_philos(t_data *data, t_philo *philos)
 		philos[i].right_fork = &(philos->data->forks[(i + 1) % data->nb_philo]);
 		philos[i].last_eaten = 0;
 		philos[i].meal_count = 0;
-		if (pthread_create(&(philos[i].thread_id), NULL, pl_eating, &(philos[i])) != 0)
+		if (pthread_create(&(philos[i].thread_id), NULL, pl_action, &(philos[i])) != 0)
 			return (1);
 		i++;
 	}

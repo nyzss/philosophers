@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 11:00:46 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 12:03:33 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef enum e_action
 	EAT,
 	SLEEP,
 	THINK,
-	DIED
+	DIED,
+	DROP,
 }	t_action;
 
 typedef struct s_data
@@ -67,8 +68,10 @@ int			pl_lock_forks(t_philo *philo);
 
 int			pl_unlock_forks(t_philo *philo);
 
-void		*pl_eating(void *arg);
+int			pl_eating(t_philo *philo);
 
 int			pl_log_action(t_philo *philo, t_action action);
+
+void		*pl_action(void *arg);
 
 #endif
