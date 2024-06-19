@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 09:34:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 09:41:46 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,9 @@ int			ft_atoi(const char *str);
 long long	pl_get_time(void);
 
 int			pl_parse_args(int ac, char **av);
+
+int			pl_lock_forks(t_philo *philo);
+
+int			pl_unlock_forks(t_philo *philo);
 
 #endif

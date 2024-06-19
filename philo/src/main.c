@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 09:36:17 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 09:41:09 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,12 @@ void	*pl_eating(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		printf("%lld %d took left fork\n", pl_get_time() - philo->data->start_time, philo->id);
-		pthread_mutex_lock(philo->right_fork);
-		printf("%lld %d took right fork\n", pl_get_time() - philo->data->start_time, philo->id);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		printf("%lld %d took right fork\n", pl_get_time() - philo->data->start_time, philo->id);
-		pthread_mutex_lock(philo->left_fork);
-		printf("%lld %d took left fork\n", pl_get_time() - philo->data->start_time, philo->id);
-	}
+	pl_lock_forks(philo);
 	philo->last_eaten = pl_get_time();
 	philo->meal_count += 1;
 	usleep(1000 * 100);
 	printf("%lld %d is eating\n", pl_get_time() - philo->data->start_time, philo->id);
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		printf("%lld %d dropped left fork\n", pl_get_time() - philo->data->start_time, philo->id);
-		pthread_mutex_unlock(philo->right_fork);
-		printf("%lld %d dropped right fork\n", pl_get_time() - philo->data->start_time, philo->id);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		printf("%lld %d dropped right fork\n", pl_get_time() - philo->data->start_time, philo->id);
-		pthread_mutex_unlock(philo->left_fork);
-		printf("%lld %d dropped left fork\n", pl_get_time() - philo->data->start_time, philo->id);
-	}
+	pl_unlock_forks(philo);
 	return (NULL);
 }
 
