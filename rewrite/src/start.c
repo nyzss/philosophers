@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 17:10:18 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 18:39:06 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,54 @@ int	pl_start_philos(t_data *data)
 	return (0);
 }
 
-void	*pl_action(void *arg)
+int		pl_eat_action(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
-		printf("LOCKED: left fork, first mutex lock here\n");
+		printf("%lld - %d hold fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 		pthread_mutex_lock(philo->right_fork);
-		printf("LOCKED: right fork, second mutex lock here\n");
+		printf("%lld - %d hold fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->right_fork);
-		printf("LOCKED: right fork, THIS IS ODD NUMBERS\n");
+		printf("%lld - %d hold fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 		pthread_mutex_lock(philo->left_fork);
-		printf("LOCKED: left fork, ODD NUMBERS AGAIN\n");
+		printf("%lld - %d hold fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 	}
-	printf("%lld - %d this should happen only once per thread\n", pl_get_time() - philo->data->start_time, philo->id);
+	printf("%lld - %d eating\n", pl_get_time() - philo->data->start_time, philo->id);
 	usleep(1000 * philo->data->time_to_eat);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->left_fork);
-		printf("UNLOCKED: left fork, first mutex unlock here\n");
+		printf("%lld - %d dropped fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 		pthread_mutex_unlock(philo->right_fork);
-		printf("UNLOCKED: right fork, second mutex unlock here\n");
+		printf("%lld - %d dropped fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 	}
 	else
 	{
 		pthread_mutex_unlock(philo->right_fork);
-		printf("UNLOCKED: right fork, THIS IS ODD NUMBERS AGAIn\n");
+		printf("%lld - %d dropped fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 		pthread_mutex_unlock(philo->left_fork);
-		printf("UNLOCKED: left fork, ODD NUMBERS AGAIN AGAIN\n");
+		printf("%lld - %d dropped fork!\n", pl_get_time() - philo->data->start_time, philo->id);
 	}
-	printf("sleep!\n");
-	usleep(1000 * philo->data->time_to_sleep);
+	return (0);
+}
+
+void	*pl_action(void *arg)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	philo = (t_philo *)arg;
+	while (i < philo->data->maximum_meal)
+	{
+		pl_eat_action(philo);
+		printf("%lld - %d sleep!!\n", pl_get_time() - philo->data->start_time, philo->id);
+		usleep(1000 * philo->data->time_to_sleep);
+		i++;
+	}
 	return (NULL);
 }
