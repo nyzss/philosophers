@@ -6,25 +6,11 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 09:41:09 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:55:55 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	*pl_eating(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	pl_lock_forks(philo);
-	philo->last_eaten = pl_get_time();
-	philo->meal_count += 1;
-	usleep(1000 * 100);
-	printf("%lld %d is eating\n", pl_get_time() - philo->data->start_time, philo->id);
-	pl_unlock_forks(philo);
-	return (NULL);
-}
 
 int	pl_join_philos(t_philo *philos)
 {
@@ -88,19 +74,23 @@ int		pl_init_forks(t_data *data)
 	return (0);
 }
 
-t_data	pl_init_data(int ac, char **av)
+int	pl_init_data(t_data *data, int ac, char **av)
 {
-	t_data	data;
+	t_data	new;
 
 	if (ac == 6)
-		data.maximum_meal = ft_atoi(av[5]);
-	data.nb_philo = ft_atoi(av[1]);
-	data.time_to_die = ft_atoi(av[2]);
-	data.time_to_eat = ft_atoi(av[3]);
-	data.time_to_sleep = ft_atoi(av[4]);
-	data.start_time = pl_get_time();
-	pl_init_forks(&data);
-	return (data);
+		new.maximum_meal = ft_atoi(av[5]);
+	new.nb_philo = ft_atoi(av[1]);
+	new.time_to_die = ft_atoi(av[2]);
+	new.time_to_eat = ft_atoi(av[3]);
+	new.time_to_sleep = ft_atoi(av[4]);
+	new.start_time = pl_get_time();
+	if (pl_init_forks(&new) != 0)
+		return (1);
+	if (pthread_mutex_init(&(new.log_mutex), NULL) != 0)
+		return (1);
+	*data = new;
+	return (0);
 }
 
 // nb_philo, time_to_die, time_to_eat, time_to_sleep, [max eat]
@@ -112,8 +102,10 @@ int main(int ac, char **av)
 
 	if (pl_parse_args(ac, av) == 1)
 		return (1);
-	data = pl_init_data(ac, av);
+	if (pl_init_data(&data, ac, av) != 0)
+		return (1);
 	pl_create_philos(&data, philo);
 	pl_destroy_forks(&data);
+	pthread_mutex_destroy(&(data.log_mutex));
 	printf("hello world!\n");
 }

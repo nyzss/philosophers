@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 09:41:46 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 11:00:46 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@
 
 typedef pthread_mutex_t mutex;
 
+typedef enum e_action
+{
+	FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIED
+}	t_action;
+
 typedef struct s_data
 {
 	int				nb_philo;
@@ -30,6 +39,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				maximum_meal;
 	long long		start_time;
+	mutex			log_mutex;
 	mutex			forks[200];
 }	t_data;
 
@@ -56,5 +66,9 @@ int			pl_parse_args(int ac, char **av);
 int			pl_lock_forks(t_philo *philo);
 
 int			pl_unlock_forks(t_philo *philo);
+
+void		*pl_eating(void *arg);
+
+int			pl_log_action(t_philo *philo, t_action action);
 
 #endif
