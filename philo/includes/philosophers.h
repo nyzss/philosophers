@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 14:32:12 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:56:52 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				maximum_meal;
 	long long		start_time;
+	int				should_end;
 	mutex			log_mutex;
 	mutex			dead_mutex;
 	mutex			forks[200];

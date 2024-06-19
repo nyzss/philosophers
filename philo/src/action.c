@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:44:28 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 14:32:26 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:57:42 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ void	*pl_action(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->dead_mutex));
-		if (pl_get_time() - philo->last_eaten > philo->data->time_to_die)
+		if (philo->data->should_end == 1)
 		{
-			pl_log_action(philo, DIED);
 			pthread_mutex_unlock(&(philo->data->dead_mutex));
-			philo->dead = 1;
 			break ;
 		}
 		pthread_mutex_unlock(&(philo->data->dead_mutex));
