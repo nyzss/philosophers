@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:37:43 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 15:41:20 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 15:45:06 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	pl_init_data(t_data *data, int ac, char **av)
 {
 	t_data	new;
 
-	new.nb_philo = av[1];
-	new.time_to_die = av[2];
-	new.time_to_die = av[3];
-	new.time_to_sleep = av[4];
+	new.nb_philo = ft_atoi(av[1]);
+	new.time_to_die = ft_atoi(av[2]);
+	new.time_to_die = ft_atoi(av[3]);
+	new.time_to_sleep = ft_atoi(av[4]);
 	new.maximum_meal = 0;
 	if (ac == 6)
-		new.maximum_meal = av[5];
+		new.maximum_meal = ft_atoi(av[5]);
 	*data = new;
 	return (0);
 }
