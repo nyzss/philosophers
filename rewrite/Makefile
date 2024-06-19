@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/19 16:26:28 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/19 16:40:03 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ CFLAGS = -Wall -Werror -Wextra -I${INCLUDES_DIR} -g
 SRC_FILES = main.c \
 			utils.c \
 			init.c \
-			philos.c
+			philos.c \
+			start.c
 
 NAME = philo
 

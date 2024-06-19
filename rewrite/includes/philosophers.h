@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 16:24:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 16:34:44 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ int			pl_start_philos(t_data *data);
 int			pl_init_philos(t_data *data, t_philo *philos);
 
 int			pl_join_philos(t_data *data, t_philo *philos);
+
+void		*pl_action(void *arg);
 
 #endif
