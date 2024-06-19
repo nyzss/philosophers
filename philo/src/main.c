@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:21:25 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 12:15:39 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:33:08 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,51 @@ int	pl_join_philos(t_philo *philos)
 	return (0);
 }
 
+int	pl_check_meal_count(t_philo *philos, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (philos[i].meal_remaining != 0)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+int	pl_check_died(t_philo *philos, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (philos[i].dead == TRUE)
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
+t_action	pl_check_philos(t_philo *philos, t_data *data)
+{
+	int	max_meal_count;
+
+	max_meal_count = 0;
+	while (1)
+	{
+		pthread_mutex_lock(&(philos->data->log_mutex));
+		if (pl_check_meal_count(philos, data) == TRUE)
+			return (SATISFIED);
+		else if (pl_check_died(philos, data) == TRUE)
+			return (DIED);
+		pthread_mutex_unlock(&(philos->data->log_mutex));
+	}
+	return (0);
+}
+
 int	pl_create_philos(t_data *data, t_philo *philos)
 {
 	int	i;
@@ -38,11 +83,13 @@ int	pl_create_philos(t_data *data, t_philo *philos)
 		philos[i].left_fork = &(philos->data->forks[i]);
 		philos[i].right_fork = &(philos->data->forks[(i + 1) % data->nb_philo]);
 		philos[i].last_eaten = pl_get_time();
-		philos[i].meal_count = 0;
+		philos[i].meal_remaining = data->maximum_meal;
+		philos[i].dead = FALSE;
 		if (pthread_create(&(philos[i].thread_id), NULL, pl_action, &(philos[i])) != 0)
 			return (1);
 		i++;
 	}
+	pl_check_philos(philos, data);
 	return (pl_join_philos(philos));
 }
 int		pl_destroy_forks(t_data *data)
@@ -89,6 +136,8 @@ int	pl_init_data(t_data *data, int ac, char **av)
 		return (1);
 	if (pthread_mutex_init(&(new.log_mutex), NULL) != 0)
 		return (1);
+	if (pthread_mutex_init(&(new.dead_mutex), NULL) != 0)
+		return (1);
 	*data = new;
 	return (0);
 }
@@ -107,5 +156,6 @@ int main(int ac, char **av)
 	pl_create_philos(&data, philo);
 	pl_destroy_forks(&data);
 	pthread_mutex_destroy(&(data.log_mutex));
+	pthread_mutex_destroy(&(data.dead_mutex));
 	printf("hello world!\n");
 }

@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:39:26 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 12:04:07 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:28:49 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	pl_eating(t_philo *philo)
 	pl_lock_forks(philo);
 	pthread_mutex_lock(&(philo->data->log_mutex));
 	philo->last_eaten = pl_get_time();
-	philo->meal_count += 1;
+	philo->meal_remaining -= 1;
 	pthread_mutex_unlock(&(philo->data->log_mutex));
 	pl_log_action(philo, EAT);
 	usleep(1000 * philo->data->time_to_eat);

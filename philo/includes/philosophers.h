@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 12:03:33 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:32:12 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define TRUE 1
+# define FALSE 0
+
 typedef pthread_mutex_t mutex;
 
 typedef enum e_action
@@ -30,6 +33,7 @@ typedef enum e_action
 	THINK,
 	DIED,
 	DROP,
+	SATISFIED,
 }	t_action;
 
 typedef struct s_data
@@ -41,6 +45,7 @@ typedef struct s_data
 	int				maximum_meal;
 	long long		start_time;
 	mutex			log_mutex;
+	mutex			dead_mutex;
 	mutex			forks[200];
 }	t_data;
 
@@ -50,7 +55,7 @@ typedef struct s_philo
 	int				dead;
 	int				is_eating;
 	int				is_sleeping;
-	int				meal_count;
+	int				meal_remaining;
 	long long		last_eaten;
 	mutex			*right_fork;
 	mutex			*left_fork;
