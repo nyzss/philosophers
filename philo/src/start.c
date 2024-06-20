@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/20 10:33:56 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/20 13:17:43 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 			printf("######### All philosophers ate! ############\n");
 			printf("print %d\n", finished);
 			printf("nb_philo %d\n", data->nb_philo);
+			data->should_end = 1;
 		}
 		pthread_mutex_unlock(&(data->log_mutex));
 		usleep(1000 * data->time_to_eat);
