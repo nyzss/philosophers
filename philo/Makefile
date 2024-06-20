@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/20 08:58:03 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/20 10:27:11 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRC_FILES = main.c \
 			init.c \
 			philos.c \
 			start.c \
-			actions.c
+			actions.c \
+			logging.c
 
 NAME = philo
 
@@ -59,7 +60,7 @@ OBJS = ${SRC:.c=.o}
 %.o: %.c
 	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}: ${OBJS} ${MLX_TARGET} ${LIBFT_TARGET}
+${NAME}:  ${OBJS} ${MLX_TARGET} ${LIBFT_TARGET}
 	@echo "$$BANNER"
 	@echo -e "${FRed}\n>>>Building ${FPurple}${NAME}${RESET}${Red}...${RESET}"
 	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
