@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 15:21:31 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/20 08:57:48 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				dead;
-	int				is_eating;
-	int				is_sleeping;
 	int				meal_remaining;
 	long long		last_eaten;
 	mutex			*right_fork;
@@ -69,14 +67,22 @@ long long	pl_get_time(void);
 
 int			pl_parse_args(int ac, char **av);
 
-int			pl_lock_forks(t_philo *philo);
+void		*pl_action(void *arg);
 
-int			pl_unlock_forks(t_philo *philo);
+int			pl_init_data(t_data *data, int ac, char **av);
 
-int			pl_eating(t_philo *philo);
+int			pl_init_mutexes(t_data *data);
 
-int			pl_log_action(t_philo *philo, t_action action);
+int			pl_destroy_mutexes(t_data *data);
+
+int			pl_start_philos(t_data *data);
+
+int			pl_init_philos(t_data *data, t_philo *philos);
+
+int			pl_join_philos(t_data *data, t_philo *philos);
 
 void		*pl_action(void *arg);
+
+int			pl_eat_action(t_philo *philo);
 
 #endif
