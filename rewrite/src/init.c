@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:37:43 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/19 18:39:09 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/20 08:34:12 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	pl_init_mutexes(t_data *data)
 {
 	int	i;
 
-	i = 0;
 	if (pthread_mutex_init(&(data->log_mutex), NULL) != 0)
 		return (0);
+	i = 0;
 	while (i < data->nb_philo)
 	{
 		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
