@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:37:43 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/20 08:34:12 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/20 08:38:00 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	pl_init_data(t_data *data, int ac, char **av)
 	new.time_to_sleep = ft_atoi(av[4]);
 	new.start_time = pl_get_time();
 	new.should_end = 0;
-	new.maximum_meal = 0;
+	new.maximum_meal = -1;
 	if (ac == 6)
 		new.maximum_meal = ft_atoi(av[5]);
 	*data = new;

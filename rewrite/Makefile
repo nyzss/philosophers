@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/19 16:40:03 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/20 08:58:03 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRC_FILES = main.c \
 			utils.c \
 			init.c \
 			philos.c \
-			start.c
+			start.c \
+			actions.c
 
 NAME = philo
 
