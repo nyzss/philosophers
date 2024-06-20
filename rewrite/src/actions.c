@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/20 09:04:36 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/20 09:11:55 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int		pl_unlock_fork_mutexes(t_philo *philo)
 int		pl_eat_action(t_philo *philo)
 {
 	pl_lock_fork_mutexes(philo);
+	philo->last_eaten = pl_get_time();
 	printf("%lld - %d eating\n", pl_get_time() - philo->data->start_time, philo->id);
 	usleep(1000 * philo->data->time_to_eat);
 	pl_unlock_fork_mutexes(philo);
