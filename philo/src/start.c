@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:28:18 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 15:52:55 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	pl_start_philos(t_data *data)
 	pl_init_philos(data, philos);
 	pl_track_philos(data, philos);
 	pl_join_philos(data, philos);
+	if (philos[0].meal_remaining == 0)
+		printf("All meal eaten!\n");
 	return (0);
 }
 
@@ -26,8 +28,6 @@ int	pl_check_dead(t_data *data, t_philo *philo, int *finished)
 {
 	if (pl_get_time() - philo->last_eaten > (data->time_to_die + 30))
 	{
-		// printf("last eaten: %lld, time to die: %d\n", pl_get_time() - philo->last_eaten, data->time_to_die);
-		// printf("CHECK_DEAD EXECUTED --------------------------\n");
 		pthread_mutex_lock(&(data->end_mutex));
 		data->should_end = 1;
 		pthread_mutex_unlock(&(data->end_mutex));
@@ -56,7 +56,6 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 		}
 		if (finished == data->nb_philo)
 		{
-			printf("FINISHED == DATA->NB_PHILO --------------------------\n");
 			pthread_mutex_lock(&(data->end_mutex));
 			data->should_end = 1;
 			pthread_mutex_unlock(&(data->end_mutex));
