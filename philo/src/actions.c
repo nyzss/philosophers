@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:18:25 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:28:52 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int		pl_think_action(t_philo *philo)
 
 int		pl_eat_action(t_philo *philo)
 {
-	// if (philo->id % 2 == 0)
-	// 	usleep(500);
+	if (philo->id % 2 == 0)
+		usleep(500);
 	// if (pl_end_check(philo) == 1)
 	// 	return (0);
 	pl_lock_fork_mutexes(philo);
