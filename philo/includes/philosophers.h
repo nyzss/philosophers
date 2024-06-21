@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 08:32:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 08:54:48 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef enum e_action
 	SLEEP,
 	THINK,
 	DIED,
-	DROP,
 	SATISFIED,
 }	t_action;
 
