@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 08:23:39 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 08:34:54 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ void	*pl_action(void *arg)
 
 	i = 0;
 	philo = (t_philo *)arg;
-	while (i < philo->data->maximum_meal)
+	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->log_mutex));
 		if (philo->data->should_end == 1)
 		{
 			pthread_mutex_unlock(&(philo->data->log_mutex));
-			// printf("ENDED\n");
 			break ;
 		}
 		pthread_mutex_unlock(&(philo->data->log_mutex));
