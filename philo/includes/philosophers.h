@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:14:56 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 17:49:13 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 # define TRUE 1
 # define FALSE 0
+
+# define DEATH 1
+# define SATIATED 2
 
 typedef pthread_mutex_t mutex;
 
@@ -44,6 +47,7 @@ typedef struct s_data
 	int				maximum_meal;
 	long long		start_time;
 	int				should_end;
+	int				end_reason;
 	mutex			log_mutex;
 	mutex			end_mutex;
 	mutex			meal_mutex;

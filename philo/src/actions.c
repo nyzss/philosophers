@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 16:08:35 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 17:47:03 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	*pl_action(void *arg)
 			break ;
 		pl_think_action(philo);
 	}
-	if (philo->data->should_end == 1 && philo->meal_remaining != 0)
+	if (philo->dead == 1)
 		pl_log(philo, DIED);
 	return (NULL);
 }
