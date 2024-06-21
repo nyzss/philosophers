@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:19:35 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 18:32:26 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 long long	pl_get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec) * (long long)1000 + (tv.tv_usec) / 1000);
 }
@@ -26,7 +27,8 @@ int	pl_parse_args(int ac, char **av)
 	i = 0;
 	if (ac < 5 || ac > 6)
 	{
-		printf("Usage: max_nb_philo, time_to_die, time_to_eat, time_to_sleep, [max eat]\n");
+		printf("Usage: max_nb_philo, time_to_die, %s\n",
+			"time_to_eat, time_to_sleep, [max eat]");
 		return (1);
 	}
 	while (i < ac - 1)
@@ -40,6 +42,7 @@ int	pl_parse_args(int ac, char **av)
 	}
 	return (0);
 }
+
 int	ft_atoi(const char *str)
 {
 	int		i;
@@ -65,14 +68,14 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int		pl_end_check(t_philo *philo)
+int	pl_end_check(t_philo *philo)
 {
-		pthread_mutex_lock(&(philo->data->end_mutex));
-		if (philo->data->should_end == 1)
-		{
-			pthread_mutex_unlock(&(philo->data->end_mutex));
-			return (1);
-		}
+	pthread_mutex_lock(&(philo->data->end_mutex));
+	if (philo->data->should_end == 1)
+	{
 		pthread_mutex_unlock(&(philo->data->end_mutex));
-		return (0);
+		return (1);
+	}
+	pthread_mutex_unlock(&(philo->data->end_mutex));
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 17:50:25 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 18:05:07 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 		finished = 0;
 		while (j < data->nb_philo)
 		{
-			pl_check_dead(data, &(philos[j]), &finished);
-			j++;
+			pl_check_dead(data, &(philos[j++]), &finished);
 		}
 		if (finished == data->nb_philo)
 		{

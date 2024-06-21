@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 17:49:13 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 18:33:26 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 # define DEATH 1
 # define SATIATED 2
 
-typedef pthread_mutex_t mutex;
-
+typedef pthread_mutex_t	t_mutex;
 typedef enum e_action
 {
 	FORK,
@@ -48,10 +47,10 @@ typedef struct s_data
 	long long		start_time;
 	int				should_end;
 	int				end_reason;
-	mutex			log_mutex;
-	mutex			end_mutex;
-	mutex			meal_mutex;
-	mutex			forks[200];
+	t_mutex			log_mutex;
+	t_mutex			end_mutex;
+	t_mutex			meal_mutex;
+	t_mutex			forks[200];
 }	t_data;
 
 typedef struct s_philo
@@ -60,8 +59,8 @@ typedef struct s_philo
 	int				dead;
 	int				meal_remaining;
 	long long		last_eaten;
-	mutex			*right_fork;
-	mutex			*left_fork;
+	t_mutex			*right_fork;
+	t_mutex			*left_fork;
 	pthread_t		thread_id;
 	t_data			*data;
 }	t_philo;
@@ -95,5 +94,9 @@ int			pl_track_philos( t_data *data, t_philo *philos);
 int			pl_log(t_philo *philo, t_action action);
 
 int			pl_end_check(t_philo *philo);
+
+int			pl_lock_fork_mutexes(t_philo *philo);
+
+int			pl_unlock_fork_mutexes(t_philo *philo);
 
 #endif

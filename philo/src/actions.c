@@ -6,66 +6,26 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 17:47:03 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 18:33:50 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int		pl_lock_fork_mutexes(t_philo *philo)
+int	pl_sleep_action(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		pl_log(philo, FORK);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		pl_log(philo, FORK);
-	}
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		pl_log(philo, FORK);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->left_fork);
-		pl_log(philo, FORK);
-	}
+	pl_log(philo, SLEEP);
+	usleep(1000 * philo->data->time_to_sleep);
 	return (0);
 }
 
-int		pl_unlock_fork_mutexes(t_philo *philo)
+int	pl_think_action(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
+	pl_log(philo, THINK);
 	return (0);
 }
 
-int		pl_sleep_action(t_philo *philo)
-{
-		pl_log(philo, SLEEP);
-		usleep(1000 * philo->data->time_to_sleep);
-		return (0);
-}
-
-int		pl_think_action(t_philo *philo)
-{
-		pl_log(philo, THINK);
-		return (0);
-}
-
-int		pl_eat_action(t_philo *philo)
+int	pl_eat_action(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep(500);
