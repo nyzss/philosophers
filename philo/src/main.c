@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:31:02 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 08:23:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 08:29:07 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	main(int ac, char **av)
 	if (pl_parse_args(ac, av) != 0)
 		return (1);
 	pl_init_data(&data, ac, av);
+	// printf("max meal: %d\n", data.maximum_meal);
+	// printf("time to die: %d\n", data.time_to_die);
+	// printf("time to eat: %d\n", data.time_to_eat);
+	// printf("time to sleep: %d\n", data.time_to_sleep);
 	pl_init_mutexes(&data);
 	pl_start_philos(&data);
 	pl_destroy_mutexes(&data);
