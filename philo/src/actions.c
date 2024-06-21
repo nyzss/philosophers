@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:28:52 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:34:23 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int		pl_eat_action(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep(500);
-	// if (pl_end_check(philo) == 1)
-	// 	return (0);
 	pl_lock_fork_mutexes(philo);
 	pl_log(philo, EAT);
 	pthread_mutex_lock(&(philo->data->meal_mutex));
@@ -94,7 +92,11 @@ void	*pl_action(void *arg)
 		if (pl_end_check(philo) == 1)
 			break ;
 		pl_eat_action(philo);
+		if (pl_end_check(philo) == 1)
+			break ;
 		pl_sleep_action(philo);
+		if (pl_end_check(philo) == 1)
+			break ;
 		pl_think_action(philo);
 	}
 	return (NULL);
