@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:23:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 15:55:01 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 16:05:38 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	pl_log(t_philo *philo, t_action action)
 {
+	pthread_mutex_lock(&(philo->data->log_mutex));
 	if (action == DIED)
 	{
 		printf("%lld %d has died\n", pl_get_time() - philo->data->start_time, philo->id);
 		return (0);
 	}
-	pthread_mutex_lock(&(philo->data->log_mutex));
 	pthread_mutex_lock(&(philo->data->meal_mutex));
 	if (philo->data->maximum_meal == 0)
 		return (0);

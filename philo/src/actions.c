@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 15:58:10 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 16:03:41 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	*pl_action(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->data->nb_philo == 1)
 	{
-		// pl_eat_action(philo);
 		pl_log(philo, FORK);
 		usleep(1000 * philo->data->time_to_die);
 		pl_log(philo, DIED);
@@ -100,10 +99,10 @@ void	*pl_action(void *arg)
 		if (pl_end_check(philo) == 1 || philo->meal_remaining == 0)
 			break ;
 		pl_eat_action(philo);
-		if (pl_end_check(philo) == 1)
+		if (pl_end_check(philo) == 1 || philo->meal_remaining == 0)
 			break ;
 		pl_sleep_action(philo);
-		if (pl_end_check(philo) == 1)
+		if (pl_end_check(philo) == 1 || philo->meal_remaining == 0)
 			break ;
 		pl_think_action(philo);
 	}
