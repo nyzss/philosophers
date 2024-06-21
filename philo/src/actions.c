@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/20 13:25:23 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 08:23:39 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int		pl_eat_action(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->log_mutex));
 	philo->last_eaten = pl_get_time();
 	philo->meal_remaining -= 1;
-	usleep(1000 * philo->data->time_to_eat);
 	pthread_mutex_unlock(&(philo->data->log_mutex));
+	usleep(1000 * philo->data->time_to_eat);
 	pl_unlock_fork_mutexes(philo);
 	return (0);
 }
@@ -78,14 +78,14 @@ void	*pl_action(void *arg)
 	philo = (t_philo *)arg;
 	while (i < philo->data->maximum_meal)
 	{
-		// pthread_mutex_lock(&(philo->data->log_mutex));
-		// if (philo->data->should_end == 1)
-		// {
-		// 	// pthread_mutex_unlock(&(philo->data->log_mutex));
-		// 	printf("ENDED\n");
-		// 	break ;
-		// }
-		// pthread_mutex_unlock(&(philo->data->log_mutex));
+		pthread_mutex_lock(&(philo->data->log_mutex));
+		if (philo->data->should_end == 1)
+		{
+			pthread_mutex_unlock(&(philo->data->log_mutex));
+			// printf("ENDED\n");
+			break ;
+		}
+		pthread_mutex_unlock(&(philo->data->log_mutex));
 		pl_eat_action(philo);
 		pl_sleep_action(philo);
 		i++;

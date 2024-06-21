@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/20 13:17:43 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 08:23:23 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,14 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 		// printf("max meal: %d\n", data->maximum_meal);
 		while (j < data->nb_philo)
 		{
-			// printf("%lld -> %d - last eaten: %lld\n", pl_get_time() - data->start_time, philos[j].id,  pl_get_time() - philos[j].last_eaten);
-			// printf("%lld -> %d - meal remaining: %d\n", pl_get_time() - data->start_time, philos[j].id, philos[j].meal_remaining);
 			pl_check_dead(data, philos, &finished);
 			j++;
 		}
 		if (finished == data->nb_philo)
 		{
-			printf("######### All philosophers ate! ############\n");
-			printf("print %d\n", finished);
-			printf("nb_philo %d\n", data->nb_philo);
+			// printf("######### All philosophers ate! ############\n");
+			// printf("print %d\n", finished);
+			// printf("nb_philo %d\n", data->nb_philo);
 			data->should_end = 1;
 		}
 		pthread_mutex_unlock(&(data->log_mutex));
