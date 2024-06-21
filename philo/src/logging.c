@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:23:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 09:28:24 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 11:44:21 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	pl_log(t_philo *philo, t_action action)
 		if (action == SLEEP)
 			printf("%lld %d is sleeping\n", pl_get_time() - philo->data->start_time, philo->id);
 		else if (action == EAT)
-		{
 			printf("%lld %d is eating\n", pl_get_time() - philo->data->start_time, philo->id);
-		}
 		else if (action == FORK)
 			printf("%lld %d took a fork\n", pl_get_time() - philo->data->start_time, philo->id);
 		else if (action == THINK)
