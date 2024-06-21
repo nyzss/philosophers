@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 18:32:26 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 19:09:21 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pl_parse_args(int ac, char **av)
 	int	i;
 
 	i = 0;
-	if (ac < 5 || ac > 6)
+	if (ac != 5 && ac != 6)
 	{
 		printf("Usage: max_nb_philo, time_to_die, %s\n",
 			"time_to_eat, time_to_sleep, [max eat]");
