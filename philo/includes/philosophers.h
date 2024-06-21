@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 09:26:20 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 13:45:13 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_data
 	long long		start_time;
 	int				should_end;
 	mutex			log_mutex;
+	mutex			end_mutex;
+	mutex			meal_mutex;
 	mutex			forks[200];
 }	t_data;
 
