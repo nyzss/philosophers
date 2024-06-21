@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 13:45:13 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:14:56 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ int			pl_eat_action(t_philo *philo);
 int			pl_track_philos( t_data *data, t_philo *philos);
 
 int			pl_log(t_philo *philo, t_action action);
+
+int			pl_end_check(t_philo *philo);
 
 #endif

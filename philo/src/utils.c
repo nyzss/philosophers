@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 09:24:26 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:19:35 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,16 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+
+int		pl_end_check(t_philo *philo)
+{
+		pthread_mutex_lock(&(philo->data->end_mutex));
+		if (philo->data->should_end == 1)
+		{
+			pthread_mutex_unlock(&(philo->data->end_mutex));
+			return (1);
+		}
+		pthread_mutex_unlock(&(philo->data->end_mutex));
+		return (0);
 }

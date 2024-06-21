@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 14:07:52 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:18:25 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int		pl_think_action(t_philo *philo)
 
 int		pl_eat_action(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-		usleep(500);
+	// if (philo->id % 2 == 0)
+	// 	usleep(500);
+	// if (pl_end_check(philo) == 1)
+	// 	return (0);
 	pl_lock_fork_mutexes(philo);
 	pl_log(philo, EAT);
 	pthread_mutex_lock(&(philo->data->meal_mutex));
@@ -87,31 +89,12 @@ void	*pl_action(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (philo->data->should_end != 1)
 	{
-		pthread_mutex_lock(&(philo->data->end_mutex));
-		if (philo->data->should_end == 1)
-		{
-			pthread_mutex_unlock(&(philo->data->end_mutex));
+		if (pl_end_check(philo) == 1)
 			break ;
-		}
-		pthread_mutex_unlock(&(philo->data->end_mutex));
 		pl_eat_action(philo);
-		pthread_mutex_lock(&(philo->data->end_mutex));
-		if (philo->data->should_end == 1)
-		{
-			pthread_mutex_unlock(&(philo->data->end_mutex));
-			break ;
-		}
-		pthread_mutex_unlock(&(philo->data->end_mutex));
 		pl_sleep_action(philo);
-		pthread_mutex_lock(&(philo->data->end_mutex));
-		if (philo->data->should_end == 1)
-		{
-			pthread_mutex_unlock(&(philo->data->end_mutex));
-			break ;
-		}
-		pthread_mutex_unlock(&(philo->data->end_mutex));
 		pl_think_action(philo);
 	}
 	return (NULL);
