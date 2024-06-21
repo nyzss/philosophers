@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 13:50:08 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:06:12 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 	while (data->should_end != 1)
 	{
 		j = 0;
-		pthread_mutex_lock(&(data->end_mutex));
 		finished = 0;
+		pthread_mutex_lock(&(data->end_mutex));
 		while (j < data->nb_philo)
 		{
-			pl_check_dead(data, philos, &finished);
+			pl_check_dead(data, &(philos[j]), &finished);
 			j++;
 		}
 		if (finished == data->nb_philo)
 			data->should_end = 1;
 		pthread_mutex_unlock(&(data->end_mutex));
-		usleep(500);
+		usleep(200);
 		i++;
 	}
 	return (0);
