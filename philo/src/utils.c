@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 19:09:21 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 13:15:37 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	pl_parse_args(int ac, char **av)
 			return (1);
 		}
 		i++;
+	}
+	if (ft_atoi(av[1]) > 200)
+	{
+		printf("no more than 200 philos please.\n");
+		return (1);
 	}
 	return (0);
 }
