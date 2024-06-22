@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:26:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 11:27:45 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 11:50:07 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	pl_init_philos(t_data *data, t_philo *philos)
 	{
 		if (pthread_mutex_init(&(philos[i].meal_mutex), NULL))
 			return (1);
+		if (pthread_mutex_init(&(philos[i].state_mutex), NULL))
+			return (1);
 		i++;
 	}
 	i = 0;
@@ -29,6 +31,7 @@ int	pl_init_philos(t_data *data, t_philo *philos)
 		philos[i].data = data;
 		philos[i].dead = 0;
 		philos[i].id = i + 1;
+		philos[i].state = IDLE;
 		philos[i].last_eaten = pl_get_time();
 		philos[i].meal_remaining = data->maximum_meal;
 		philos[i].left_fork = &(data->forks[i]);
@@ -56,6 +59,8 @@ int	pl_join_philos(t_data *data, t_philo *philos)
 	while (i < data->nb_philo)
 	{
 		if (pthread_mutex_destroy(&(philos[i].meal_mutex)))
+			return (1);
+		if (pthread_mutex_destroy(&(philos[i].state_mutex)))
 			return (1);
 		i++;
 	}

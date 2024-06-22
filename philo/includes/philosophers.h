@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 11:23:00 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 11:53:08 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ typedef enum e_action
 	SATISFIED,
 }	t_action;
 
+typedef enum e_state
+{
+	IDLE,
+	EATING,
+	DEAD,
+	FINISHED
+}	t_state;
+
 typedef struct s_data
 {
 	int				nb_philo;
@@ -58,9 +66,11 @@ typedef struct s_philo
 	int				dead;
 	int				meal_remaining;
 	long long		last_eaten;
+	t_state			state;
 	t_mutex			*right_fork;
 	t_mutex			*left_fork;
 	t_mutex			meal_mutex;
+	t_mutex			state_mutex;
 	pthread_t		thread_id;
 	t_data			*data;
 }	t_philo;
