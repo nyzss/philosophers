@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:26:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 18:33:39 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 11:27:45 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ int	pl_init_philos(t_data *data, t_philo *philos)
 {
 	int		i;
 
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_mutex_init(&(philos[i].meal_mutex), NULL))
+			return (1);
+		i++;
+	}
 	i = 0;
 	while (i < data->nb_philo)
 	{
@@ -42,6 +49,13 @@ int	pl_join_philos(t_data *data, t_philo *philos)
 	while (i < data->nb_philo)
 	{
 		if (pthread_join(philos[i].thread_id, NULL) != 0)
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_mutex_destroy(&(philos[i].meal_mutex)))
 			return (1);
 		i++;
 	}

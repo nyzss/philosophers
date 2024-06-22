@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 18:05:07 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 11:29:59 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int	pl_check_dead(t_data *data, t_philo *philo, int *finished)
 		data->should_end = 1;
 		pthread_mutex_unlock(&(data->end_mutex));
 	}
+	pthread_mutex_lock(&(philo->meal_mutex));
 	if (philo->meal_remaining == 0)
 	{
 		if (data->end_reason == 0)
 			data->end_reason = SATIATED;
 		*finished += 1;
 	}
+	pthread_mutex_unlock(&(philo->meal_mutex));
 	return (0);
 }
 
@@ -55,7 +57,6 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 	while (data->should_end != 1)
 	{
 		j = 0;
-		pthread_mutex_lock(&(data->meal_mutex));
 		finished = 0;
 		while (j < data->nb_philo)
 		{
@@ -67,7 +68,6 @@ int	pl_track_philos( t_data *data, t_philo *philos)
 			data->should_end = 1;
 			pthread_mutex_unlock(&(data->end_mutex));
 		}
-		pthread_mutex_unlock(&(data->meal_mutex));
 		usleep(200);
 		i++;
 	}

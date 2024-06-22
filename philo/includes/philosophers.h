@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/21 18:33:26 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 11:23:00 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_data
 	int				end_reason;
 	t_mutex			log_mutex;
 	t_mutex			end_mutex;
-	t_mutex			meal_mutex;
 	t_mutex			forks[200];
 }	t_data;
 
@@ -61,6 +60,7 @@ typedef struct s_philo
 	long long		last_eaten;
 	t_mutex			*right_fork;
 	t_mutex			*left_fork;
+	t_mutex			meal_mutex;
 	pthread_t		thread_id;
 	t_data			*data;
 }	t_philo;
