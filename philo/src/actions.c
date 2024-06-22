@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 08:57:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 11:28:16 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 14:36:54 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,6 @@ void	*pl_action(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->data->nb_philo == 1)
-	{
-		pl_log(philo, FORK);
-		usleep(1000 * philo->data->time_to_die);
-		pl_log(philo, DIED);
-		return (NULL);
-	}
 	while (philo->data->should_end != 1)
 	{
 		if (pl_end_check(philo) == 1 || philo->meal_remaining == 0)
