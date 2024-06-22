@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 11:23:00 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 14:35:51 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ long long	pl_get_time(void);
 
 int			pl_parse_args(int ac, char **av);
 
-void		*pl_action(void *arg);
-
 int			pl_init_data(t_data *data, int ac, char **av);
 
 int			pl_init_mutexes(t_data *data);
@@ -84,6 +82,8 @@ int			pl_start_philos(t_data *data);
 int			pl_init_philos(t_data *data, t_philo *philos);
 
 int			pl_join_philos(t_data *data, t_philo *philos);
+
+int			pl_handle_single_philo(t_data *data);
 
 void		*pl_action(void *arg);
 

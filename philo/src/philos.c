@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:26:01 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 11:27:45 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/22 14:35:06 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ int	pl_join_philos(t_data *data, t_philo *philos)
 		if (pthread_mutex_destroy(&(philos[i].meal_mutex)))
 			return (1);
 		i++;
+	}
+	return (0);
+}
+
+int	pl_handle_single_philo(t_data *data)
+{
+	if (data->nb_philo == 1)
+	{
+		printf("%lld %d has taken a fork\n", pl_get_time() - data->start_time, 1);
+		usleep(1000 * data->time_to_die);
+		printf("%lld %d died\n", pl_get_time() - data->start_time, 1);
+		return (1);
 	}
 	return (0);
 }
