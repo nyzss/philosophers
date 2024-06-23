@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 14:35:25 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/23 08:55:49 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	pl_start_philos(t_data *data)
 
 int	pl_check_dead(t_data *data, t_philo *philo, int *finished)
 {
-	if ((data->time_to_die <= data->time_to_sleep + data->time_to_eat)
-		&& (pl_get_time() - philo->last_eaten) > (data->time_to_die))
+	if ((pl_get_time() - philo->last_eaten) > (data->time_to_die))
 	{
 		pthread_mutex_lock(&(data->end_mutex));
 		if (data->end_reason == 0)
