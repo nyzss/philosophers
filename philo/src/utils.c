@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/24 09:27:20 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/24 09:32:02 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	ft_sleep(t_data *data, int time)
 {
 	long long	first;
 
-	(void)data;
 	first = pl_get_time();
 	while (pl_get_time() - first <= time)
 	{
