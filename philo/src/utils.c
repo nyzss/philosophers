@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 20:12:15 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 13:15:37 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/24 09:27:20 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,25 @@ int	pl_end_check(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_unlock(&(philo->data->end_mutex));
+	return (0);
+}
+
+int	ft_sleep(t_data *data, int time)
+{
+	long long	first;
+
+	(void)data;
+	first = pl_get_time();
+	while (pl_get_time() - first <= time)
+	{
+		pthread_mutex_lock(&(data->end_mutex));
+		if (data->should_end == 1)
+		{
+			pthread_mutex_unlock(&(data->end_mutex));
+			break ;
+		}
+		pthread_mutex_unlock(&(data->end_mutex));
+		usleep(50);
+	}
 	return (0);
 }

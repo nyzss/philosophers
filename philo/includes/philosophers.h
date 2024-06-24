@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 07:19:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/22 14:35:51 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/24 09:10:51 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int			pl_end_check(t_philo *philo);
 int			pl_lock_fork_mutexes(t_philo *philo);
 
 int			pl_unlock_fork_mutexes(t_philo *philo);
+
+int			ft_sleep(t_data *data, int time);
 
 #endif
