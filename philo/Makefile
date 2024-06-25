@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/21 18:05:18 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/25 13:12:45 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ OBJS = ${SRC:.c=.o}
 %.o: %.c
 	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}:  ${OBJS} ${MLX_TARGET} ${LIBFT_TARGET}
+${NAME}: ${OBJS}
 	@echo "$$BANNER"
 	@echo -e "${FRed}\n>>>Building ${FPurple}${NAME}${RESET}${Red}...${RESET}"
 	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
