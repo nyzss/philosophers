@@ -6,7 +6,7 @@
 #    By: okoca <okoca@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/30 19:32:31 by okoca             #+#    #+#              #
-#    Updated: 2024/06/25 21:36:10 by okoca            ###   ########.fr        #
+#    Updated: 2024/06/25 21:57:43 by okoca            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC_DIR = src/
 
 INCLUDES_DIR = includes
 
-CFLAGS = -Wall -Werror -Wextra -I${INCLUDES_DIR} -pthread -fsanitize=thread -g
+CFLAGS = -Wall -Werror -Wextra -I${INCLUDES_DIR} # -pthread -fsanitize=thread -g
 
 SRC_FILES = main.c \
 			utils.c \
