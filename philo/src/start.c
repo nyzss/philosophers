@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:52:05 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/25 21:41:06 by okoca            ###   ########.fr       */
+/*   Updated: 2024/07/24 14:33:13 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,7 @@ int	pl_start_philos(t_data *data)
 int	pl_check_dead(t_data *data, t_philo *philo, int *finished)
 {
 	pthread_mutex_lock(&(philo->meal_mutex));
-	// weird fix, works mostly
-	// haven't seen something break this yet but
-	// im pretty sure it can break, if i find something that breaks it
-	// i'll change it
-	if (((data->nb_philo % 2 != 0
-				&& data->time_to_die <= data->time_to_eat + data->time_to_sleep)
-			|| data->nb_philo % 2 == 0)
-		&& (pl_get_time() - philo->last_eaten) > (data->time_to_die))
+	if (pl_get_time() - philo->last_eaten > data->time_to_die)
 	{
 		pthread_mutex_lock(&(data->end_mutex));
 		if (data->end_reason == 0)
